@@ -1,0 +1,55 @@
+#######################################################################################
+### conda added to PATH. Use 'source activate' rather than 'conda activate'.        ###
+### Run 'conda init' if prompted *only* after reading the guides:                   ###
+###   /p/system/packages/anaconda/2021.11/bin/conda init --help                     ###
+### and                                                                             ###
+###   https://docs.anaconda.com/anaconda/user-guide/faq/#installing-anaconda        ###
+### tl;dr: 'conda init' will modify your shell outside of the `module` environment  ###
+###                                                                                 ###
+#######################################################################################
+Traceback (most recent call last):
+  File "bin/train.py", line 21, in <module>
+    from saicinpainting.training.trainers import make_training_model
+  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/trainers/__init__.py", line 3, in <module>
+    from saicinpainting.training.trainers.default import DefaultInpaintingTrainingModule
+  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/trainers/default.py", line 7, in <module>
+    from saicinpainting.training.data.datasets import make_constant_area_crop_params
+  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/data/datasets.py", line 6, in <module>
+    import albumentations as A
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/albumentations/__init__.py", line 9, in <module>
+    from .imgaug.transforms import *
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/albumentations/imgaug/transforms.py", line 1, in <module>
+    import imgaug as ia
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/__init__.py", line 9, in <module>
+    import imgaug.augmentables as augmentables
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmentables/__init__.py", line 8, in <module>
+    from imgaug.augmentables.segmaps import *
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmentables/segmaps.py", line 12, in <module>
+    from ..augmenters import blend as blendlib
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmenters/__init__.py", line 21, in <module>
+    from imgaug.augmenters.segmentation import *
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmenters/segmentation.py", line 21, in <module>
+    import skimage.segmentation
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/segmentation/__init__.py", line 2, in <module>
+    from .active_contour_model import active_contour
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/segmentation/active_contour_model.py", line 5, in <module>
+    from ..filters import sobel
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/filters/__init__.py", line 4, in <module>
+    from .edges import (sobel, sobel_h, sobel_v,
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/filters/edges.py", line 18, in <module>
+    from ..restoration.uft import laplacian
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/restoration/__init__.py", line 9, in <module>
+    from ._cycle_spin import cycle_spin
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/restoration/_cycle_spin.py", line 6, in <module>
+    import dask
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/__init__.py", line 3, in <module>
+    from . import config, datasets
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 512, in <module>
+    refresh()
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 411, in refresh
+    update(config, collect(**kwargs))
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 375, in collect
+    configs.extend(collect_yaml(paths=paths))
+  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 168, in collect_yaml
+    data = yaml.load(f.read()) or {}
+TypeError: load() missing 1 required positional argument: 'Loader'

@@ -1,0 +1,5 @@
+# @package _group_
+data_root_dir: /p/tmp/bochow/LAMA/lama/celeba-hq-dataset/
+out_root_dir: /p/tmp/bochow/LAMA/lama/experiments/
+tb_dir: /p/tmp/bochow/LAMA/lama/tb_logs/
+pretrained_models: /p/tmp/bochow/LAMA/lama/
