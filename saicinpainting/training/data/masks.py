@@ -3,7 +3,7 @@ import random
 import hashlib
 import logging
 from enum import Enum
-
+import h5py
 import cv2
 import numpy as np
 
@@ -46,7 +46,37 @@ def make_random_irregular_mask(shape, max_angle=4, max_len=60, max_width=20, min
                 mask[start_y - radius:start_y + radius, start_x - radius:start_x + radius] = 1
             start_x, start_y = end_x, end_y
     return mask[None, ...]
+    
+def make_random_fixed_mask(shape, maskpath):
+    height, width = shape
+    mask = np.zeros((height, width), np.float32)
+    mask_file = h5py.File(maskpath, 'r')
+    maskdata = mask_file["tas"]
+    print(maskdata.dtype)
+    mask = maskdata[np.random.randint(maskdata.shape[0]),:,:]
+    return mask[None, ...]
 
+def make_fixed_mask(shape, maskpath, index):
+    height, width = shape
+    mask = np.zeros((height, width), np.float32)
+    mask_file = h5py.File(maskpath, 'r')
+    maskdata = mask_file["tas"]
+    mask = maskdata[index,:,:]
+    return mask[None, ...]
+
+
+class RandomFixedMaskGenerator:
+    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+        self.maskpath = maskpath
+    def __call__(self, img, iter_i=None, raw_image=None):
+        return make_random_fixed_mask(img.shape[1:], maskpath=self.maskpath)
+
+
+class FixedMaskGenerator:
+    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+        self.maskpath = maskpath
+    def __call__(self, img, index, iter_i=None, raw_image=None):
+        return make_fixed_mask(img.shape[1:], maskpath=self.maskpath, index = index)
 
 class RandomIrregularMaskGenerator:
     def __init__(self, max_angle=4, max_len=60, max_width=20, min_times=0, max_times=10, ramp_kwargs=None,
@@ -325,6 +355,8 @@ def get_mask_generator(kind, kwargs):
         cl = MixedMaskGenerator
     elif kind == "outpainting":
         cl = OutpaintingMaskGenerator
+    elif kind == "fixed":
+        cl = RandomFixedMaskGenerator
     elif kind == "dumb":
         cl = DumbAreaMaskGenerator
     else:

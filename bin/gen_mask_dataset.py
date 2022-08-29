@@ -12,7 +12,8 @@ from joblib import Parallel, delayed
 from saicinpainting.evaluation.masks.mask import SegmentationMask, propose_random_square_crop
 from saicinpainting.evaluation.utils import load_yaml, SmallMode
 from saicinpainting.training.data.masks import MixedMaskGenerator
-
+from saicinpainting.training.data.masks import RandomFixedMaskGenerator
+from saicinpainting.training.data.masks import FixedMaskGenerator
 
 class MakeManyMasksWrapper:
     def __init__(self, impl, variants_n=2):
@@ -24,6 +25,22 @@ class MakeManyMasksWrapper:
         return [self.impl(img)[0] for _ in range(self.variants_n)]
 
 
+class MakeManyMasksWrapperFixed:
+    def __init__(self, impl):
+        self.impl = impl
+
+    def get_masks(self, img):
+        img = np.transpose(np.array(img), (2, 0, 1))
+        return [self.impl(img)[0]]
+
+class MakeManyMasksWrapperFixedNoRand:
+    def __init__(self, impl):
+        self.impl = impl
+
+    def get_masks(self, img, index):
+        img = np.transpose(np.array(img), (2, 0, 1))
+        return [self.impl(img, int(index))[0]]
+
 def process_images(src_images, indir, outdir, config):
     if config.generator_kind == 'segmentation':
         mask_generator = SegmentationMask(**config.mask_generator_kwargs)
@@ -31,6 +48,10 @@ def process_images(src_images, indir, outdir, config):
         variants_n = config.mask_generator_kwargs.pop('variants_n', 2)
         mask_generator = MakeManyMasksWrapper(MixedMaskGenerator(**config.mask_generator_kwargs),
                                               variants_n=variants_n)
+    elif config.generator_kind == 'fixed':
+        mask_generator = MakeManyMasksWrapperFixed(RandomFixedMaskGenerator())
+    elif config.generator_kind == 'fixed_no_rand': 
+        mask_generator = MakeManyMasksWrapperFixedNoRand(FixedMaskGenerator())
     else:
         raise ValueError(f'Unexpected generator kind: {config.generator_kind}')
 
@@ -59,10 +80,17 @@ def process_images(src_images, indir, outdir, config):
                 image = image.resize(out_size, resample=Image.BICUBIC)
 
             # generate and select masks
-            src_masks = mask_generator.get_masks(image)
+            if config.generator_kind == 'fixed_no_rand': 
+                #print(infile[-10:-4] )
+                index = infile[-10:-4] 
+                src_masks = mask_generator.get_masks(image, index)
+
+            else:
+                src_masks = mask_generator.get_masks(image)
 
             filtered_image_mask_pairs = []
             for cur_mask in src_masks:
+
                 if config.cropping.out_square_crop:
                     (crop_left,
                      crop_top,
@@ -75,9 +103,13 @@ def process_images(src_images, indir, outdir, config):
                     cur_image = image
 
                 if len(np.unique(cur_mask)) == 0 or cur_mask.mean() > max_tamper_area:
+                    print("here", cur_mask.mean(), max_tamper_area)
+                    print(len(np.unique(cur_mask)))
                     continue
 
+                print("fuck", cur_image, cur_mask)
                 filtered_image_mask_pairs.append((cur_image, cur_mask))
+                print(filtered_image_mask_pairs)
 
             mask_indices = np.random.choice(len(filtered_image_mask_pairs),
                                             size=min(len(filtered_image_mask_pairs), config.max_masks_per_image),
@@ -85,6 +117,8 @@ def process_images(src_images, indir, outdir, config):
 
             # crop masks; save masks together with input image
             mask_basename = os.path.join(outdir, os.path.splitext(file_relpath)[0])
+            print(mask_basename)
+            print(mask_indices)
             for i, idx in enumerate(mask_indices):
                 cur_image, cur_mask = filtered_image_mask_pairs[idx]
                 cur_basename = mask_basename + f'_crop{i:03d}'
