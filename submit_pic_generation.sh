@@ -1,15 +1,11 @@
 #!/bin/bash
 
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:v100:2
 #SBATCH --qos=medium
 #SBATCH --nodes=1
-#SBATCH --ntasks=16
 #SBATCH --time=48:00:00
-#SBATCH --mem=60000
-#SBATCH --job-name=gpu
-#SBATCH --output=gpu.out
-#SBATCH --error=gpu.err
+#SBATCH --job-name=era5_pic_generation
+#SBATCH --output=era5_pic_generation.out
+#SBATCH --error=era5_pic_generation.err
 
 module load anaconda/2021.11
 source activate /p/tmp/bochow/lama_env/
@@ -18,6 +14,4 @@ module load cuda/10.2
 export HDF5_USE_FILE_LOCKING='FALSE'
 
 
-python3 bin/train.py -cn lama-fourier-celeba data.batch_size=10
-
-
+srun --ntasks=1 --cpus-per-task=1  python /p/tmp/bochow/LAMA/lama/era5-dataset/generate_images.py

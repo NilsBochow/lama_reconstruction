@@ -5,11 +5,11 @@
 #SBATCH --qos=medium
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
-#SBATCH --time=48:00:00
-#SBATCH --mem=60000
+#SBATCH --time=100:00:00
+#SBATCH --mem=80000
 #SBATCH --job-name=gpu
-#SBATCH --output=gpu.out
-#SBATCH --error=gpu.err
+#SBATCH --output=hadcrut_cr.out
+#SBATCH --error=hadcrut_cr.err
 
 module load anaconda/2021.11
 source activate /p/tmp/bochow/lama_env/
@@ -18,6 +18,6 @@ module load cuda/10.2
 export HDF5_USE_FILE_LOCKING='FALSE'
 
 
-python3 bin/train.py -cn lama-fourier-celeba data.batch_size=10
+srun --ntasks=1 --cpus-per-task=16 python bin/train.py -cn lama-fourier-hadcrut data.batch_size=90
 
 
