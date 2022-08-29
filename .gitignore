@@ -147,6 +147,10 @@ dmypy.json
 *.h5
 
 *.pth
+*.out
+*.err
 *.ckpt
 tb_logs/
+celeba-hq-dataset/
 experiments/
+outputs/
