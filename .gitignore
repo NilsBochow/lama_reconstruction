@@ -142,5 +142,11 @@ dmypy.json
 *.jpeg
 *.zip
 
+## data files
+*.nc
+*.h5
+
 *.pth
 *.ckpt
+tb_logs/
+experiments/
