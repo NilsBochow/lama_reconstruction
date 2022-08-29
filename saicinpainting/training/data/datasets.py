@@ -9,6 +9,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import webdataset
+import netCDF4
 from omegaconf import open_dict, OmegaConf
 from skimage.feature import canny
 from skimage.transform import rescale, resize
@@ -24,7 +25,7 @@ LOGGER = logging.getLogger(__name__)
 
 class InpaintingTrainDataset(Dataset):
     def __init__(self, indir, mask_generator, transform):
-        self.in_files = list(glob.glob(os.path.join(indir, '**', '*.jpg'), recursive=True))
+        self.in_files = list(glob.glob(os.path.join(indir, '**', '*.png'), recursive=True))
         self.mask_generator = mask_generator
         self.transform = transform
         self.iter_i = 0
@@ -204,7 +205,7 @@ def get_transforms(transform_variant, out_size):
 
 
 def make_default_train_dataloader(indir, kind='default', out_size=512, mask_gen_kwargs=None, transform_variant='default',
-                                  mask_generator_kind="mixed", dataloader_kwargs=None, ddp_kwargs=None, **kwargs):
+                                  mask_generator_kind="fixed", dataloader_kwargs=None, ddp_kwargs=None, **kwargs):
     LOGGER.info(f'Make train dataloader {kind} from {indir}. Using mask generator={mask_generator_kind}')
 
     mask_generator = get_mask_generator(kind=mask_generator_kind, kwargs=mask_gen_kwargs)
