@@ -51,8 +51,7 @@ def make_random_fixed_mask(shape, maskpath):
     height, width = shape
     mask = np.zeros((height, width), np.float32)
     mask_file = h5py.File(maskpath, 'r')
-    maskdata = mask_file["tas"]
-    print(maskdata.dtype)
+    maskdata = mask_file["siconc"]
     mask = maskdata[np.random.randint(maskdata.shape[0]),:,:]
     return mask[None, ...]
 
@@ -60,20 +59,23 @@ def make_fixed_mask(shape, maskpath, index):
     height, width = shape
     mask = np.zeros((height, width), np.float32)
     mask_file = h5py.File(maskpath, 'r')
-    maskdata = mask_file["tas"]
+    maskdata = mask_file["siconc"]
     mask = maskdata[index,:,:]
     return mask[None, ...]
 
 
 class RandomFixedMaskGenerator:
-    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+    #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+    #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/sic/sic_missmask.h5"):
+    def __init__(self, maskpath='/p/tmp/bochow/sic_era5/mask_sic1440.h5'):
         self.maskpath = maskpath
     def __call__(self, img, iter_i=None, raw_image=None):
         return make_random_fixed_mask(img.shape[1:], maskpath=self.maskpath)
 
 
 class FixedMaskGenerator:
-    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+    #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/sic/sic_missmask.h5"):
+    def __init__(self, maskpath='/p/tmp/bochow/sic_era5/mask_sic1440.h5'):
         self.maskpath = maskpath
     def __call__(self, img, index, iter_i=None, raw_image=None):
         return make_fixed_mask(img.shape[1:], maskpath=self.maskpath, index = index)
