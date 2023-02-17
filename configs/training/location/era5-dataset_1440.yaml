@@ -1,0 +1,3 @@
+data_root_dir: /p/tmp/bochow/sic_era5/
+out_root_dir: /p/tmp/bochow/LAMA/lama/experiments/
+tb_dir: /p/tmp/bochow/LAMA/lama/tb_logs/

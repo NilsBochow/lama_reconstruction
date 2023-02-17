@@ -2,8 +2,8 @@
 kind: ffc_resnet
 input_nc: 4
 output_nc: 3
-ngf: 64
-n_downsampling: 3
+ngf: 32 #64
+n_downsampling: 2 #3
 n_blocks: 9
 add_out_act: sigmoid
 
