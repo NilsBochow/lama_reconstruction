@@ -79,7 +79,7 @@ class ImgSegmentationDataset(Dataset):
         path = self.in_files[item]
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = cv2.resize(img, (self.out_size, self.out_size))
+        #img = cv2.resize(img, (self.out_size, self.out_size))
         img = self.transform(image=img)['image']
         img = np.transpose(img, (2, 0, 1))
         mask = self.mask_generator(img)
@@ -103,8 +103,8 @@ def get_transforms(transform_variant, out_size):
     if transform_variant == 'default':
         transform = A.Compose([
             A.RandomScale(scale_limit=0.2),  # +/- 20%
-            A.PadIfNeeded(min_height=out_size, min_width=out_size),
-            A.RandomCrop(height=out_size, width=out_size),
+            #A.PadIfNeeded(min_height=out_size, min_width=out_size),
+            #A.RandomCrop(height=out_size, width=out_size),
             A.HorizontalFlip(),
             A.CLAHE(),
             A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2),
@@ -117,9 +117,9 @@ def get_transforms(transform_variant, out_size):
             IAAAffine2(scale=(0.7, 1.3),
                        rotate=(-40, 40),
                        shear=(-0.1, 0.1)),
-            A.PadIfNeeded(min_height=out_size, min_width=out_size),
+            #A.PadIfNeeded(min_height=out_size, min_width=out_size),
             A.OpticalDistortion(),
-            A.RandomCrop(height=out_size, width=out_size),
+            #A.RandomCrop(height=out_size, width=out_size),
             A.HorizontalFlip(),
             A.CLAHE(),
             A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2),
@@ -210,7 +210,7 @@ def make_default_train_dataloader(indir, kind='default', out_size=512, mask_gen_
 
     mask_generator = get_mask_generator(kind=mask_generator_kind, kwargs=mask_gen_kwargs)
     transform = get_transforms(transform_variant, out_size)
-
+    print("make_default_train_dataloader")
     if kind == 'default':
         dataset = InpaintingTrainDataset(indir=indir,
                                          mask_generator=mask_generator,
