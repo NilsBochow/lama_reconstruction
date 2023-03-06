@@ -13,7 +13,8 @@ from saicinpainting.evaluation.masks.mask import SegmentationMask, propose_rando
 from saicinpainting.evaluation.utils import load_yaml, SmallMode
 from saicinpainting.training.data.masks import MixedMaskGenerator
 from saicinpainting.training.data.masks import RandomFixedMaskGenerator
-from saicinpainting.training.data.masks import FixedMaskGenerator
+from saicinpainting.training.data.masks import FixedMaskGenerator 
+from saicinpainting.training.data.masks import FixedMaskGeneratorPercentage
 
 class MakeManyMasksWrapper:
     def __init__(self, impl, variants_n=2):
@@ -52,6 +53,8 @@ def process_images(src_images, indir, outdir, config):
         mask_generator = MakeManyMasksWrapperFixed(RandomFixedMaskGenerator())
     elif config.generator_kind == 'fixed_no_rand': 
         mask_generator = MakeManyMasksWrapperFixedNoRand(FixedMaskGenerator())
+    elif config.generator_kind == 'percentage': 
+        mask_generator = MakeManyMasksWrapperFixed(FixedMaskGeneratorPercentage())
     else:
         raise ValueError(f'Unexpected generator kind: {config.generator_kind}')
 
@@ -64,7 +67,7 @@ def process_images(src_images, indir, outdir, config):
             os.makedirs(os.path.dirname(img_outpath), exist_ok=True)
 
             image = Image.open(infile).convert('RGB')
-
+            print("image size", image.size)
             # scale input image to output resolution and filter smaller images
             if min(image.size) < config.cropping.out_min_size:
                 handle_small_mode = SmallMode(config.cropping.handle_small_mode)
@@ -73,6 +76,7 @@ def process_images(src_images, indir, outdir, config):
                 elif handle_small_mode == SmallMode.UPSCALE:
                     factor = config.cropping.out_min_size / min(image.size)
                     out_size = (np.array(image.size) * factor).round().astype('uint32')
+                    print(out_size)
                     image = image.resize(out_size, resample=Image.BICUBIC)
             else:
                 factor = config.cropping.out_min_size / min(image.size)
@@ -82,9 +86,10 @@ def process_images(src_images, indir, outdir, config):
             # generate and select masks
             if config.generator_kind == 'fixed_no_rand': 
                 #print(infile[-10:-4] )
-                index = infile[-10:-4] 
+                #index = infile[-10:-4] 
+                index = infile[-15:-11] 
                 src_masks = mask_generator.get_masks(image, index)
-
+                print(np.array(src_masks).shape)
             else:
                 src_masks = mask_generator.get_masks(image)
 
@@ -107,9 +112,9 @@ def process_images(src_images, indir, outdir, config):
                     print(len(np.unique(cur_mask)))
                     continue
 
-                print("fuck", cur_image, cur_mask)
+                print("fuck", np.array(cur_image).shape, np.array(cur_mask).shape)
                 filtered_image_mask_pairs.append((cur_image, cur_mask))
-                print(filtered_image_mask_pairs)
+                #print(filtered_image_mask_pairs)
 
             mask_indices = np.random.choice(len(filtered_image_mask_pairs),
                                             size=min(len(filtered_image_mask_pairs), config.max_masks_per_image),
@@ -117,8 +122,8 @@ def process_images(src_images, indir, outdir, config):
 
             # crop masks; save masks together with input image
             mask_basename = os.path.join(outdir, os.path.splitext(file_relpath)[0])
-            print(mask_basename)
-            print(mask_indices)
+            #rint(mask_basename)
+            print(np.array(cur_mask).shape)
             for i, idx in enumerate(mask_indices):
                 cur_image, cur_mask = filtered_image_mask_pairs[idx]
                 cur_basename = mask_basename + f'_crop{i:03d}'

@@ -55,6 +55,18 @@ def make_random_fixed_mask(shape, maskpath):
     mask = maskdata[np.random.randint(maskdata.shape[0]),:,:]
     return mask[None, ...]
 
+def make_percentage_mask(shape, maskpath):
+    height, width = shape
+    mask = np.zeros((height, width), np.float32)
+    mask_file = h5py.File(maskpath, 'r')
+    maskdata = mask_file["siconc"]
+    list_of_indices = np.genfromtxt("/p/tmp/bochow/sic_era5/percentages_per_month.csv")[:]
+    print(list_of_indices.shape, np.argwhere(((list_of_indices>0) & (list_of_indices <10)))[:,0].shape)
+    percentage = 0
+    index = np.random.choice(np.argwhere(((list_of_indices>percentage) & (list_of_indices <percentage+10)))[:,0])
+    mask = maskdata[index,:,:]
+    return mask[None, ...]
+
 def make_fixed_mask(shape, maskpath, index):
     height, width = shape
     mask = np.zeros((height, width), np.float32)
@@ -79,6 +91,13 @@ class FixedMaskGenerator:
         self.maskpath = maskpath
     def __call__(self, img, index, iter_i=None, raw_image=None):
         return make_fixed_mask(img.shape[1:], maskpath=self.maskpath, index = index)
+
+class FixedMaskGeneratorPercentage:
+    #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/sic/sic_missmask.h5"):
+    def __init__(self, maskpath='/p/tmp/bochow/sic_era5/mask_sic_1440x180.h5'):
+        self.maskpath = maskpath
+    def __call__(self, img, iter_i=None, raw_image=None):
+        return make_percentage_mask(img.shape[1:], maskpath=self.maskpath)
 
 class RandomIrregularMaskGenerator:
     def __init__(self, max_angle=4, max_len=60, max_width=20, min_times=0, max_times=10, ramp_kwargs=None,
@@ -359,6 +378,8 @@ def get_mask_generator(kind, kwargs):
         cl = OutpaintingMaskGenerator
     elif kind == "fixed":
         cl = RandomFixedMaskGenerator
+    elif kind == "percentage":
+        cl = FixedMaskGeneratorPercentage
     elif kind == "dumb":
         cl = DumbAreaMaskGenerator
     else:
