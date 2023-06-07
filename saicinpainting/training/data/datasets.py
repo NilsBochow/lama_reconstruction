@@ -79,7 +79,8 @@ class ImgSegmentationDataset(Dataset):
         path = self.in_files[item]
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        #img = cv2.resize(img, (self.out_size, self.out_size))
+        ### uncomment for square pictures 
+        img = cv2.resize(img, (self.out_size, self.out_size))
         img = self.transform(image=img)['image']
         img = np.transpose(img, (2, 0, 1))
         mask = self.mask_generator(img)
@@ -103,8 +104,9 @@ def get_transforms(transform_variant, out_size):
     if transform_variant == 'default':
         transform = A.Compose([
             A.RandomScale(scale_limit=0.2),  # +/- 20%
-            #A.PadIfNeeded(min_height=out_size, min_width=out_size),
-            #A.RandomCrop(height=out_size, width=out_size),
+            ### uncomment for square images during training 
+            A.PadIfNeeded(min_height=out_size, min_width=out_size),
+            A.RandomCrop(height=out_size, width=out_size),
             A.HorizontalFlip(),
             A.CLAHE(),
             A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2),
@@ -117,9 +119,10 @@ def get_transforms(transform_variant, out_size):
             IAAAffine2(scale=(0.7, 1.3),
                        rotate=(-40, 40),
                        shear=(-0.1, 0.1)),
-            #A.PadIfNeeded(min_height=out_size, min_width=out_size),
+            ### uncomment for square images during training 
+            A.PadIfNeeded(min_height=out_size, min_width=out_size), #and this line
             A.OpticalDistortion(),
-            #A.RandomCrop(height=out_size, width=out_size),
+            A.RandomCrop(height=out_size, width=out_size), # this line
             A.HorizontalFlip(),
             A.CLAHE(),
             A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2),
@@ -204,6 +207,7 @@ def get_transforms(transform_variant, out_size):
     return transform
 
 #HERE for training
+### try no augs transform
 def make_default_train_dataloader(indir, kind='default', out_size=512, mask_gen_kwargs=None, transform_variant='default',
                                   mask_generator_kind="fixed", dataloader_kwargs=None, ddp_kwargs=None, **kwargs):
     LOGGER.info(f'Make train dataloader {kind} from {indir}. Using mask generator={mask_generator_kind}')
