@@ -86,8 +86,8 @@ def process_images(src_images, indir, outdir, config):
             # generate and select masks
             if config.generator_kind == 'fixed_no_rand': 
                 #print(infile[-10:-4] )
-                #index = infile[-10:-4] 
-                index = infile[-15:-11] 
+                index = infile[-10:-4] 
+                #index = infile[-15:-11] 
                 src_masks = mask_generator.get_masks(image, index)
                 print(np.array(src_masks).shape)
             else:
