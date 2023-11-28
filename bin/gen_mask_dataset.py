@@ -42,7 +42,7 @@ class MakeManyMasksWrapperFixedNoRand:
         img = np.transpose(np.array(img), (2, 0, 1))
         return [self.impl(img, int(index))[0]]
 
-def process_images(src_images, indir, outdir, config):
+def process_images(src_images, indir, outdir, config):#, index):
     if config.generator_kind == 'segmentation':
         mask_generator = SegmentationMask(**config.mask_generator_kwargs)
     elif config.generator_kind == 'random':
@@ -52,6 +52,8 @@ def process_images(src_images, indir, outdir, config):
     elif config.generator_kind == 'fixed':
         mask_generator = MakeManyMasksWrapperFixed(RandomFixedMaskGenerator())
     elif config.generator_kind == 'fixed_no_rand': 
+        mask_generator = MakeManyMasksWrapperFixedNoRand(FixedMaskGenerator())
+    elif config.generator_kind == 'fixed_index': 
         mask_generator = MakeManyMasksWrapperFixedNoRand(FixedMaskGenerator())
     elif config.generator_kind == 'percentage': 
         mask_generator = MakeManyMasksWrapperFixed(FixedMaskGeneratorPercentage())
@@ -85,9 +87,14 @@ def process_images(src_images, indir, outdir, config):
 
             # generate and select masks
             if config.generator_kind == 'fixed_no_rand': 
-                #print(infile[-10:-4] )
-                index = infile[-10:-4] 
+                print(infile[-10:-4] )
+                index = infile[-10:-4] #for hadcrut 
+                
                 #index = infile[-15:-11] 
+                src_masks = mask_generator.get_masks(image, index)
+                print(np.array(src_masks).shape)
+            elif config.generator_kind == 'fixed_index': 
+                index = index
                 src_masks = mask_generator.get_masks(image, index)
                 print(np.array(src_masks).shape)
             else:
@@ -143,10 +150,10 @@ def main(args):
     os.makedirs(args.outdir, exist_ok=True)
 
     config = load_yaml(args.config)
-
+    #index = args.index
     in_files = list(glob.glob(os.path.join(args.indir, '**', f'*.{args.ext}'), recursive=True))
     if args.n_jobs == 0:
-        process_images(in_files, args.indir, args.outdir, config)
+        process_images(in_files, args.indir, args.outdir, config)#, index) #here the index argument only if mask_generator = fixed_index
     else:
         in_files_n = len(in_files)
         chunk_size = in_files_n // args.n_jobs + (1 if in_files_n % args.n_jobs > 0 else 0)
@@ -158,12 +165,13 @@ def main(args):
 
 if __name__ == '__main__':
     import argparse
-
+    print("es laeuft")
     aparser = argparse.ArgumentParser()
     aparser.add_argument('config', type=str, help='Path to config for dataset generation')
     aparser.add_argument('indir', type=str, help='Path to folder with images')
     aparser.add_argument('outdir', type=str, help='Path to folder to store aligned images and masks to')
     aparser.add_argument('--n-jobs', type=int, default=0, help='How many processes to use')
     aparser.add_argument('--ext', type=str, default='jpg', help='Input image extension')
+    #aparser.add_argument('--index', type=int, help='Index for mask creation')
 
     main(aparser.parse_args())
