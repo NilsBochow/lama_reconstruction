@@ -7,6 +7,26 @@ num_workers: 0
 train:
   indir: ${location.data_root_dir}/train_2
   out_size: 72 #1440 #180 #image size
+  ##following lines are for mixed generation, can be commented out if during training the fixed method is used.
+  mask_gen_kwargs:
+    irregular_proba: 1
+    irregular_kwargs:
+      min_times: 4
+      max_times: 5
+      max_width: 35
+      max_angle: 4
+      max_len: 40
+
+    box_proba: 0.3
+    box_kwargs:
+      margin: 0
+      bbox_min_size: 10
+      bbox_max_size: 70
+      max_times: 5
+      min_times: 1
+
+    segm_proba: 0
+
   #mask_gen_kwargs:  # probabilities do not need to sum to 1, they are re-normalized in mask generator
     #irregular_proba: 1
     #irregular_kwargs:
@@ -33,7 +53,7 @@ train:
     num_workers: ${data.num_workers}
 
 val:
-  indir: ${location.data_root_dir}/val_2
+  indir: ${location.data_root_dir}/val_random_mask
   img_suffix: .png
   dataloader_kwargs:
     batch_size: ${data.val_batch_size}
@@ -99,7 +119,7 @@ val:
 #      num_workers: ${data.num_workers}
 
 visual_test:
-  indir: ${location.data_root_dir}/visual_test_2
+  indir: ${location.data_root_dir}/visual_test_random_mask
   img_suffix: .png
   pad_out_to_modulo: 32
   dataloader_kwargs:
