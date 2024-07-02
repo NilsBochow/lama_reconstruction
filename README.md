@@ -1,3 +1,7 @@
+There is a preprint at https://arxiv.org/abs/2311.18348
+Note that the changes I made to this repository are not necessary up-to date with everything in the preprint. Please contact me, if you wonder about something or open an issue. 
+
+
 # 🦙 LaMa: Resolution-robust Large Mask Inpainting with Fourier Convolutions
 
 Official implementation by Samsung Research
