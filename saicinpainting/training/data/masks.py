@@ -75,6 +75,7 @@ def make_fixed_mask(shape, maskpath, index):
     #maskdata = mask_file["siconc"]
     maskdata = mask_file["tas"]
     mask = maskdata[index,:,:]
+    print("make_fixed_mask", index, mask.shape)
     return mask[None, ...]
 
 
@@ -90,7 +91,8 @@ class RandomFixedMaskGenerator:
 class FixedMaskGenerator:
     #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/sic/sic_missmask.h5"):
     #def __init__(self, maskpath='/p/tmp/bochow/sic_era5/mask_sic_1440x180.h5'):
-    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"):
+    def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_hadcrut_own.h5"): #hadcrut
+    #def __init__(self, maskpath="/p/tmp/bochow/LAMA/lama/hadcrut/mask_best_square_90x90.h5"): #best
         self.maskpath = maskpath
     def __call__(self, img, index, iter_i=None, raw_image=None):
         return make_fixed_mask(img.shape[1:], maskpath=self.maskpath, index = index)
@@ -377,6 +379,7 @@ def get_mask_generator(kind, kwargs):
 
     if kind == "mixed":
         cl = MixedMaskGenerator
+        print("masks.py, get_mask_generator function")
     elif kind == "outpainting":
         cl = OutpaintingMaskGenerator
     elif kind == "fixed":
