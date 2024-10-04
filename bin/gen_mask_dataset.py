@@ -42,7 +42,7 @@ class MakeManyMasksWrapperFixedNoRand:
         img = np.transpose(np.array(img), (2, 0, 1))
         return [self.impl(img, int(index))[0]]
 
-def process_images(src_images, indir, outdir, config):#, index):
+def process_images(src_images, indir, outdir, config, index=None): #here for index_fixed
     if config.generator_kind == 'segmentation':
         mask_generator = SegmentationMask(**config.mask_generator_kwargs)
     elif config.generator_kind == 'random':
@@ -89,11 +89,13 @@ def process_images(src_images, indir, outdir, config):#, index):
             if config.generator_kind == 'fixed_no_rand': 
                 print(infile[-10:-4] )
                 index = infile[-10:-4] #for hadcrut 
-                
+                #index = i # revision hadcrut5 loop through all
                 #index = infile[-15:-11] 
                 src_masks = mask_generator.get_masks(image, index)
                 print(np.array(src_masks).shape)
             elif config.generator_kind == 'fixed_index': 
+                if index is None:
+                    raise ValueError("Index must be provided for fixed_index generator kind")
                 index = index
                 src_masks = mask_generator.get_masks(image, index)
                 print(np.array(src_masks).shape)
@@ -134,8 +136,11 @@ def process_images(src_images, indir, outdir, config):#, index):
             for i, idx in enumerate(mask_indices):
                 cur_image, cur_mask = filtered_image_mask_pairs[idx]
                 cur_basename = mask_basename + f'_crop{i:03d}'
+               #Image.fromarray(np.clip(cur_mask * 255, 0, 255).astype('uint8'),
+                #                mode='L').save(cur_basename + f'_{index:03d}_mask{i:03d}.png') #index for varying masks but fixed image
+                #cur_image.save(cur_basename + f'_{index:03d}'+ '.png')
                 Image.fromarray(np.clip(cur_mask * 255, 0, 255).astype('uint8'),
-                                mode='L').save(cur_basename + f'_mask{i:03d}.png')
+                                mode='L').save(cur_basename + f'_mask{i:03d}.png') #index for varying masks but fixed image
                 cur_image.save(cur_basename + '.png')
         except KeyboardInterrupt:
             return
@@ -150,10 +155,13 @@ def main(args):
     os.makedirs(args.outdir, exist_ok=True)
 
     config = load_yaml(args.config)
-    #index = args.index
-    in_files = list(glob.glob(os.path.join(args.indir, '**', f'*.{args.ext}'), recursive=True))
+    index = args.index
+    #in_files = list(glob.glob(os.path.join(args.indir, '*2052*.png'), recursive=True)) #for revision, one month all masks
+
+    in_files = list(glob.glob(os.path.join(args.indir, '**', f'*.{args.ext}'), recursive=True)) #normal
+    print(in_files)
     if args.n_jobs == 0:
-        process_images(in_files, args.indir, args.outdir, config)#, index) #here the index argument only if mask_generator = fixed_index
+        process_images(in_files, args.indir, args.outdir, config, index) #here the index argument only if mask_generator = fixed_index
     else:
         in_files_n = len(in_files)
         chunk_size = in_files_n // args.n_jobs + (1 if in_files_n % args.n_jobs > 0 else 0)
@@ -172,6 +180,6 @@ if __name__ == '__main__':
     aparser.add_argument('outdir', type=str, help='Path to folder to store aligned images and masks to')
     aparser.add_argument('--n-jobs', type=int, default=0, help='How many processes to use')
     aparser.add_argument('--ext', type=str, default='jpg', help='Input image extension')
-    #aparser.add_argument('--index', type=int, help='Index for mask creation')
-
+    aparser.add_argument('--index', type=int, help='Index for mask creation (only used if mask_generator is fixed_index)')
+    
     main(aparser.parse_args())
