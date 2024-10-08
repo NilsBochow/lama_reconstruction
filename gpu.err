@@ -7,49 +7,140 @@
 ### tl;dr: 'conda init' will modify your shell outside of the `module` environment  ###
 ###                                                                                 ###
 #######################################################################################
-Traceback (most recent call last):
-  File "bin/train.py", line 21, in <module>
-    from saicinpainting.training.trainers import make_training_model
-  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/trainers/__init__.py", line 3, in <module>
-    from saicinpainting.training.trainers.default import DefaultInpaintingTrainingModule
-  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/trainers/default.py", line 7, in <module>
-    from saicinpainting.training.data.datasets import make_constant_area_crop_params
-  File "/p/tmp/bochow/LAMA/lama/saicinpainting/training/data/datasets.py", line 6, in <module>
-    import albumentations as A
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/albumentations/__init__.py", line 9, in <module>
-    from .imgaug.transforms import *
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/albumentations/imgaug/transforms.py", line 1, in <module>
-    import imgaug as ia
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/__init__.py", line 9, in <module>
-    import imgaug.augmentables as augmentables
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmentables/__init__.py", line 8, in <module>
-    from imgaug.augmentables.segmaps import *
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmentables/segmaps.py", line 12, in <module>
-    from ..augmenters import blend as blendlib
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmenters/__init__.py", line 21, in <module>
-    from imgaug.augmenters.segmentation import *
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/imgaug/augmenters/segmentation.py", line 21, in <module>
-    import skimage.segmentation
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/segmentation/__init__.py", line 2, in <module>
-    from .active_contour_model import active_contour
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/segmentation/active_contour_model.py", line 5, in <module>
-    from ..filters import sobel
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/filters/__init__.py", line 4, in <module>
-    from .edges import (sobel, sobel_h, sobel_v,
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/filters/edges.py", line 18, in <module>
-    from ..restoration.uft import laplacian
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/restoration/__init__.py", line 9, in <module>
-    from ._cycle_spin import cycle_spin
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/skimage/restoration/_cycle_spin.py", line 6, in <module>
-    import dask
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/__init__.py", line 3, in <module>
-    from . import config, datasets
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 512, in <module>
-    refresh()
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 411, in refresh
-    update(config, collect(**kwargs))
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 375, in collect
-    configs.extend(collect_yaml(paths=paths))
-  File "/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py", line 168, in collect_yaml
-    data = yaml.load(f.read()) or {}
-TypeError: load() missing 1 required positional argument: 'Loader'
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py:168: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  data = yaml.load(f.read()) or {}
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'hydra/overrides': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'trainer/any_gpu_large_ssim_ddp_final_celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'evaluator/default_inpainted': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'visualizer/directory': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'optimizers/default_optimizers': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'discriminator/pix2pixhd_nlayer': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'generator/ffc_resnet_075': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'data/abl-04-256-mh-dist-celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'location/celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/omegaconf/resolvers/__init__.py:13: UserWarning: The `env` resolver is deprecated, see https://github.com/omry/omegaconf/issues/573
+  "The `env` resolver is deprecated, see https://github.com/omry/omegaconf/issues/573"
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/torchvision/models/inception.py:83: FutureWarning: The default weight initialization of inception_v3 will be changed in future releases of torchvision. If you wish to keep the old behavior (which leads to long initialization times due to scipy/scipy#11299), please set init_weights=True.
+  ' due to scipy/scipy#11299), please set init_weights=True.', FutureWarning)
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+initializing ddp: GLOBAL_RANK: 0, MEMBER: 1/2
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/dask/config.py:168: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  data = yaml.load(f.read()) or {}
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'hydra/overrides': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'trainer/any_gpu_large_ssim_ddp_final_celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'evaluator/default_inpainted': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'visualizer/directory': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'optimizers/default_optimizers': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'discriminator/pix2pixhd_nlayer': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'generator/ffc_resnet_075': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'data/abl-04-256-mh-dist-celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/hydra/core/default_element.py:127: UserWarning: In 'location/celeba': Usage of deprecated keyword in package header '# @package _group_'.
+See https://hydra.cc/docs/next/upgrades/1.0_to_1.1/changes_to_package_header for more information
+  See {url} for more information"""
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/omegaconf/resolvers/__init__.py:13: UserWarning: The `env` resolver is deprecated, see https://github.com/omry/omegaconf/issues/573
+  "The `env` resolver is deprecated, see https://github.com/omry/omegaconf/issues/573"
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/torchvision/models/inception.py:83: FutureWarning: The default weight initialization of inception_v3 will be changed in future releases of torchvision. If you wish to keep the old behavior (which leads to long initialization times due to scipy/scipy#11299), please set init_weights=True.
+  ' due to scipy/scipy#11299), please set init_weights=True.', FutureWarning)
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1]
+initializing ddp: GLOBAL_RANK: 1, MEMBER: 2/2
+Set SLURM handle signals.
+Set SLURM handle signals.
+
+  | Name           | Type                      | Params
+-------------------------------------------------------------
+0 | generator      | FFCResNetGenerator        | 27.0 M
+1 | discriminator  | NLayerDiscriminator       | 7.0 M 
+2 | val_evaluator  | InpaintingEvaluatorOnline | 36.5 M
+3 | test_evaluator | InpaintingEvaluatorOnline | 36.5 M
+4 | loss_l1        | L1Loss                    | 0     
+5 | loss_resnet_pl | ResNetPL                  | 23.6 M
+-------------------------------------------------------------
+34.0 M    Trainable params
+74.8 M    Non-trainable params
+108 M     Total params
+435.444   Total estimated model params size (MB)
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/pytorch_lightning/utilities/distributed.py:68: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 16 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/pytorch_lightning/utilities/distributed.py:68: UserWarning: The dataloader, val dataloader 1, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 16 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+/p/tmp/bochow/lama_env/lib/python3.6/site-packages/pytorch_lightning/utilities/distributed.py:68: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 16 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Epoch 0, global step 2599: val_ssim_fid100_f1_total_mean reached 0.84288 (best 0.84288), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=0-step=2599.ckpt" as top 5
+Epoch 1, global step 5199: val_ssim_fid100_f1_total_mean reached 0.90701 (best 0.90701), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=1-step=5199.ckpt" as top 5
+Epoch 2, global step 7799: val_ssim_fid100_f1_total_mean reached 0.90986 (best 0.90986), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=2-step=7799.ckpt" as top 5
+Epoch 3, global step 10399: val_ssim_fid100_f1_total_mean reached 0.91613 (best 0.91613), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=3-step=10399.ckpt" as top 5
+Epoch 4, global step 12999: val_ssim_fid100_f1_total_mean reached 0.92099 (best 0.92099), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=4-step=12999.ckpt" as top 5
+Epoch 5, global step 15599: val_ssim_fid100_f1_total_mean reached 0.92420 (best 0.92420), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=5-step=15599.ckpt" as top 5
+Epoch 6, global step 18199: val_ssim_fid100_f1_total_mean reached 0.91820 (best 0.92420), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=6-step=18199.ckpt" as top 5
+Epoch 7, global step 20799: val_ssim_fid100_f1_total_mean reached 0.92358 (best 0.92420), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=7-step=20799.ckpt" as top 5
+Epoch 8, global step 23399: val_ssim_fid100_f1_total_mean reached 0.92713 (best 0.92713), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=8-step=23399.ckpt" as top 5
+Epoch 9, global step 25999: val_ssim_fid100_f1_total_mean reached 0.92867 (best 0.92867), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=9-step=25999.ckpt" as top 5
+Epoch 10, global step 28599: val_ssim_fid100_f1_total_mean reached 0.92593 (best 0.92867), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=10-step=28599.ckpt" as top 5
+Epoch 11, step 31199: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 12, global step 33799: val_ssim_fid100_f1_total_mean reached 0.92753 (best 0.92867), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=12-step=33799.ckpt" as top 5
+Epoch 13, global step 36399: val_ssim_fid100_f1_total_mean reached 0.92794 (best 0.92867), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=13-step=36399.ckpt" as top 5
+Epoch 14, global step 38999: val_ssim_fid100_f1_total_mean reached 0.92905 (best 0.92905), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=14-step=38999.ckpt" as top 5
+Epoch 15, global step 41599: val_ssim_fid100_f1_total_mean reached 0.93396 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=15-step=41599.ckpt" as top 5
+Epoch 16, global step 44199: val_ssim_fid100_f1_total_mean reached 0.93174 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=16-step=44199.ckpt" as top 5
+Epoch 17, global step 46799: val_ssim_fid100_f1_total_mean reached 0.93166 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=17-step=46799.ckpt" as top 5
+Epoch 18, global step 49399: val_ssim_fid100_f1_total_mean reached 0.93004 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=18-step=49399.ckpt" as top 5
+Epoch 19, step 51999: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 20, global step 54599: val_ssim_fid100_f1_total_mean reached 0.93270 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=20-step=54599.ckpt" as top 5
+Epoch 21, global step 57199: val_ssim_fid100_f1_total_mean reached 0.93191 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=21-step=57199.ckpt" as top 5
+Epoch 22, global step 59799: val_ssim_fid100_f1_total_mean reached 0.93315 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=22-step=59799.ckpt" as top 5
+Epoch 23, global step 62399: val_ssim_fid100_f1_total_mean reached 0.93235 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=23-step=62399.ckpt" as top 5
+Epoch 24, step 64999: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 25, global step 67599: val_ssim_fid100_f1_total_mean reached 0.93317 (best 0.93396), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=25-step=67599.ckpt" as top 5
+Epoch 26, step 70199: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 27, global step 72799: val_ssim_fid100_f1_total_mean reached 0.93521 (best 0.93521), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=27-step=72799.ckpt" as top 5
+Epoch 28, step 75399: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 29, global step 77999: val_ssim_fid100_f1_total_mean reached 0.93561 (best 0.93561), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=29-step=77999.ckpt" as top 5
+Epoch 30, step 80599: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 31, global step 83199: val_ssim_fid100_f1_total_mean reached 0.93515 (best 0.93561), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=31-step=83199.ckpt" as top 5
+Epoch 32, global step 85799: val_ssim_fid100_f1_total_mean reached 0.93443 (best 0.93561), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=32-step=85799.ckpt" as top 5
+Epoch 33, step 88399: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 34, global step 90999: val_ssim_fid100_f1_total_mean reached 0.93451 (best 0.93561), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=34-step=90999.ckpt" as top 5
+Epoch 35, global step 93599: val_ssim_fid100_f1_total_mean reached 0.93603 (best 0.93603), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=35-step=93599.ckpt" as top 5
+Epoch 36, global step 96199: val_ssim_fid100_f1_total_mean reached 0.93617 (best 0.93617), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=36-step=96199.ckpt" as top 5
+Epoch 37, step 98799: val_ssim_fid100_f1_total_mean was not in top 5
+Epoch 38, global step 101399: val_ssim_fid100_f1_total_mean reached 0.93608 (best 0.93617), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=38-step=101399.ckpt" as top 5
+Epoch 39, global step 103999: val_ssim_fid100_f1_total_mean reached 0.93599 (best 0.93617), saving model to "/p/tmp/bochow/LAMA/lama/experiments/bochow_2022-08-05_12-55-46_train_lama-fourier-celeba_/models/epoch=39-step=103999.ckpt" as top 5
+Saving latest checkpoint...
