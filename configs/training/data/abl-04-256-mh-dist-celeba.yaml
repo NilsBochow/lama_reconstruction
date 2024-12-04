@@ -2,10 +2,10 @@
 
 batch_size: 5
 val_batch_size: 3
-num_workers: 3
+num_workers: 2
 
 train:
-  indir: ${location.data_root_dir}/train_256
+  indir: ${location.data_root_dir}train_256
   out_size: 256
   mask_gen_kwargs:  # probabilities do not need to sum to 1, they are re-normalized in mask generator
     irregular_proba: 1
@@ -33,7 +33,7 @@ train:
     num_workers: ${data.num_workers}
 
 val:
-  indir: ${location.data_root_dir}/val_256
+  indir: ${location.data_root_dir}val_256
   img_suffix: .png
   dataloader_kwargs:
     batch_size: ${data.val_batch_size}

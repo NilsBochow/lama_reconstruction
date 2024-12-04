@@ -1,4 +1,4 @@
-generator_kind: fixed_no_rand
+generator_kind: fixed_index #fixed
 
 mask_generator_kwargs:
 
