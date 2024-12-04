@@ -288,4 +288,14 @@ class BaseInpaintingTrainingModule(ptl.LightningModule):
         batch['discr_output_diff'] = batch['discr_output_real'] - batch['discr_output_fake']
 
     def get_ddp_rank(self):
-        return self.trainer.global_rank if (self.trainer.num_nodes * self.trainer.num_processes) > 1 else None
+        if not hasattr(self.trainer, 'num_processes'):
+            return None
+        
+        is_distributed = (
+            hasattr(self.trainer, 'num_nodes') and 
+            hasattr(self.trainer, 'num_processes') and
+            (self.trainer.num_nodes * self.trainer.num_processes) > 1
+        )
+        
+        return self.trainer.global_rank if is_distributed else None
+
