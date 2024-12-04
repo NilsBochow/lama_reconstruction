@@ -16,13 +16,17 @@ import hydra
 ####
 import torch
 print(torch.cuda.device_count())
+print(torch.cuda.is_available())
+print(torch.__version__)
+print(torch.version.cuda)
+
 ####
 
 from omegaconf import OmegaConf
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
-from pytorch_lightning.plugins import DDPPlugin
+from pytorch_lightning.strategies import DDPStrategy
 
 from saicinpainting.training.trainers import make_training_model
 from saicinpainting.utils import register_debug_signal_handlers, handle_ddp_subprocess, handle_ddp_parent_process, \
