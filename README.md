@@ -1,7 +1,17 @@
 # 🦙 LaMa: Resolution-robust Large Mask Inpainting with Fourier Convolutions
 
-Official implementation by Samsung Research
+Modified implementation used for [Reconstructing Historical Climate Fields With Deep Learning](https://arxiv.org/abs/2311.18348).
 
+Main changes include the ability to train on pre-generated masks drawn from a h5-file - modified for use with climate fields.
+New mask-generation classes are implemented. Some changes in the config files are needed to choose the correct mask generator for training and evaluation. 
+The training, validation and testing(eval) set generation corresponds to the original version.
+
+Model checkpoints and other data are archived at https://www.doi.org/10.5281/zenodo.10512175.
+Code was originally written for Pytorch 1 + Pytorch Lightning 1. However, it also runs with Pytorch 2 together with Pytorch Lightning 1.9 without any big changes.
+For questions or problems please open an issue or contact me directly via e-mail.
+Below is the original Readmne.
+
+The official implementation is by Samsung Research
 by Roman Suvorov, Elizaveta Logacheva, Anton Mashikhin, 
 Anastasia Remizova, Arsenii Ashukha, Aleksei Silvestrov, Naejin Kong, Harshith Goka, Kiwoong Park, Victor Lempitsky.
 
@@ -369,10 +379,7 @@ On the host machine:
     $(pwd)/inference/my_dataset/random_<size>_512_metrics.csv
 
     
-**OR** in the docker:
 
-    TODO: train
-    TODO: eval
     
 # Hints
 
